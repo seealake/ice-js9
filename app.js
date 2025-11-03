@@ -46,7 +46,16 @@ function validate() {
  * @returns {boolean} true if matches, false otherwise
  */
 function validateName(name) {
-    return false; // TODO: Validate the name!
+    if (typeof name !== 'string' || name.length === 0) {
+        return false;
+    }
+    for (let i = 0; i < name.length; i++) {
+        const c = name[i];
+        if (!isLetter(c) && !isSpace(c)) {
+            return false;
+        }
+    }
+    return true;
 }
 
 /**
