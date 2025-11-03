@@ -65,15 +65,24 @@ function validateName(name) {
  */
 function validateEmails() {
     const allInputs = document.getElementById("email-inputs").getElementsByTagName("input");
-    
+
     if (allInputs.length === 0) {
         return false;
     }
 
-    // TODO: Rather than just checking the first email, check every email!
-    // HINT: You'll likely need to use a loop!
-    const isFirstEmailValid = validateEmail(allInputs[0].value)
-    return isFirstEmailValid;
+    let allValid = true;
+    for (let i = 0; i < allInputs.length; i++) {
+        const input = allInputs[i];
+        const value = input.value;
+        if (validateEmail(value)) {
+            input.className = 'form-control';
+        } else {
+            input.className = 'form-control is-invalid';
+            allValid = false;
+        }
+    }
+
+    return allValid;
 }
 
 /**
