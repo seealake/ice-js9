@@ -46,16 +46,20 @@ function validate() {
  * @returns {boolean} true if matches, false otherwise
  */
 function validateName(name) {
-    if (typeof name !== 'string' || name.length === 0) {
-        return false;
+    // TODO: Validate the name!
+    if (typeof name !== 'string') return false;
+    const s = name.trim();
+    if (s.length === 0) return false;
+
+    let seenLetter = false;
+    let prevSpace = false;
+
+    for (const ch of s) {
+        if (isLetter(ch)) { seenLetter = true; prevSpace = false; continue; }
+        if (isSpace(ch))  { if (prevSpace) return false; prevSpace = true; continue; }
+        return false; 
     }
-    for (let i = 0; i < name.length; i++) {
-        const c = name[i];
-        if (!isLetter(c) && !isSpace(c)) {
-            return false;
-        }
-    }
-    return true;
+    return seenLetter; 
 }
 
 /**
@@ -93,7 +97,9 @@ function validateEmails() {
  * @returns {boolean} true if matches, false otherwise
  */
 function validateEmail(email) {
-    return false; // TODO: Validate the email!
+    // TODO: Validate the email!
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
 }
 
 /**
